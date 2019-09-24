@@ -16,14 +16,15 @@ class ScoredBoard(Board):
 # elem in list1  for elem in list2
       if any(str.upper(n_side) == str.upper(p) for p in self.position) and any(str.upper(side) == str.upper(p) for p in self.position) :  # [side,  ] in self.position: 
         super().computeMoves( side, n_side, mysideDirection, depth)
-      else:
-        #print('oops', self.position)
-        self.pointValue = self.getPoints(self.position, getSide() ) *2
+      else:        
+        self.pointValue =  self.getPoints(self.position, getSide() ) * 2
+        #print('oops', self.position, self.pointValue )
        # self.pointValue = side if mysideDirection == mysideDirection.myOrg else n_side
         return
 
-      if self.nextboards==[]: #no move posible for the oponent
-        self.pointValue = mysideDirection.acuPointsFun(12,-12)  # get some dynamic value?
+      if self.nextboards==[]: #no move posible for the oponent        
+        self.pointValue =  self.getPoints(self.position, getSide() ) * 3   #n_side.acuPointsFun(-13,13) #  mysideDirection.acuPointsFun(-13,13)  # get some dynamic value?
+        #print('oops', self.position, self.pointValue )
       elif depth>0:
         self.pointValue = mysideDirection.acuPointsFun(br.pointValue for br in self.tree)            
       else:

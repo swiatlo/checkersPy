@@ -3,7 +3,9 @@ from scoredboard import * #Board
 from random import *
 from sys import *
 
-sb = ScoredBoard('bbbbbbbbb bb  b   w ww wwwwwwwww')
+#sb = ScoredBoard('bbbbbbbbb bb  b   w ww wwwwwwwww', [], Board(''))
+sb = ScoredBoard(' W b bwWb w          wBB        ', [], Board(''))
+
 print(sb)
 
 
@@ -16,7 +18,7 @@ if len(sys.argv) >1:
         #         print('comp move ', idx)
         #         break
         sb = choice( [brd for brd in sb.tree if brd.pointValue == sb.pointValue] )
-        sb = ScoredBoard.fromList( sb.position )
+        sb = ScoredBoard.fromList( sb.position, sb.cacheRes, sb.compBoard )
         print('comp move ')
         print(sb)           
         sb.computeMoves('w','b', m_side.myOposite, 1)
@@ -31,7 +33,7 @@ if len(sys.argv) >1:
         # else:
         #   idx = randrange(0,len(sb.nextboards))
         
-        sb = ScoredBoard.fromList( sb.nextboards[idx][0])
+        sb = ScoredBoard.fromList(sb.nextboards[idx][0], sb.cacheRes, sb.compBoard )
         print('after my move')
         print(sb)
     exit()
@@ -52,7 +54,7 @@ while True:
   xb = choice( [brd for brd in sb.tree if brd.pointValue == sb.pointValue] )
   print('comp move ', sb.tree.index(xb))
 
-  sb = ScoredBoard.fromList( xb.position )
+  sb = ScoredBoard.fromList( xb.position, xb.cacheRes, xb.compBoard  )
   print(sb)
   sb.computeMoves('w','b', m_side.myOposite, 0)
   for idx, brd in enumerate(sb.nextboards, start=0):    
@@ -60,6 +62,6 @@ while True:
   idx = int(input())
   if idx==-1 or idx >= len( sb.nextboards): 
     break
-  sb = ScoredBoard.fromList( sb.nextboards[idx][0])
+  sb = ScoredBoard.fromList( sb.nextboards[idx][0], sb.cacheRes, sb.compBoard )
   print('after my move')
   print(sb)
