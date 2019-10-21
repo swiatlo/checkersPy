@@ -1,6 +1,7 @@
 
 
 class CellMove():
+  # this represent one cell and holds an array of next positions, all moves from that cell (fwd, back, steps and jumps)
   stepFw =[]
   stepBk =[]
   jumpFw =[]
@@ -42,6 +43,9 @@ class Moves():
 
   @classmethod
   def makeOposite(cls, m):
+    """ Based on the the object with a point of view of one player this will create 
+    an object of all posible moves for the opposition.
+    """
     ret = Moves(0,0)
     ret.length = m.length
     ret.width = m.width
@@ -65,6 +69,8 @@ class Moves():
 
 
   def __init__(self, length, width):
+    """ creates a matrix of CellMove objects for each cell. That objects hold all possible moves for a piece 
+    """
     if length == 0:
       return    
     last_cellnum = width*length 
@@ -75,6 +81,10 @@ class Moves():
     cellnums = [[i, int((i / width)+1 ) % 2] for i in range( last_cellnum ) ] #kkk in  range( length * width)
       
     def nextcell(curcell,delt):
+      """ returns a cell number that is available for a pawn to move.
+      From one cell a pawn can move on two cells in next row. If the current cell is at edge of the board
+      it can go to one new cell only. Last row cannot move fwd ofc.
+      """
       if curcell == None:
         return
       retval = curcell+(width-1)+delt + cellnums[curcell][1]
@@ -84,6 +94,9 @@ class Moves():
         return 
 
     def fixcell(i,delt):
+      """ calculate all posible moves for a pawn forward and backward (for the king)
+      moves can be a step, jump. it stores a number tha is jumped over (enemy piece)
+      """
       nc = nextcell(i,delt)
       if nc != None:  
         self.cells[i].lastLine = False       
@@ -96,7 +109,7 @@ class Moves():
           self.cells[jc].jumpBk.append(i)
           self.cells[jc].jumpBkOver.append(nc)    
 
-    for i in range( last_cellnum ):
+    for i in range( last_cellnum ):   # A piece can move fwd in two directions    
       fixcell(i,0)
       fixcell(i,1)
 

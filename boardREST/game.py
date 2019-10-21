@@ -4,8 +4,9 @@ from random import *
 from sys import *
 
 #sb = ScoredBoard('bbbbbbbbb bb  b   w ww wwwwwwwww', [], Board(''))
-sb = ScoredBoard(' W b bwWb w          wBB        ', [], Board(''))
-
+#sb = ScoredBoard(' W b bwWb w          wBB        ', [], Board(''))
+#sb = ScoredBoard('  bb   b  bb b      www     ww w', [], Board(''))
+sb = ScoredBoard('b       b    bb b   w w ww bw  w', [], Board(''))
 print(sb)
 
 
@@ -41,7 +42,7 @@ if len(sys.argv) >1:
 
 while True:
   tstart = time.time()
-  sb.computeMoves('b','w', m_side, 7)
+  sb.computeMoves('b','w', m_side, 6)
   print(time.time() - tstart)
   print(ScoredBoard.getBoardCount())
   for idx, brd in enumerate(sb.tree, start=0):
